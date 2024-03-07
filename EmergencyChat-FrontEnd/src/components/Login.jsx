@@ -42,7 +42,7 @@ export default function Login() {
           </div>
         </form>
       </div>
-      <div className="w-50">
+      <div className="w-50 logo">
         <img src={loginimg} className="img-fluid" alt="..."></img>
       </div>
     </div>

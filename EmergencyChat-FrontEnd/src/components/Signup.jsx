@@ -42,7 +42,7 @@ export default function Signup() {
           </div>
         </form>
       </div>
-      <div className="w-50 px-5">
+      <div className="w-50 px-5 logo">
         <img src={signimg} className="img-fluid" alt="..."></img>
       </div>
     </div>

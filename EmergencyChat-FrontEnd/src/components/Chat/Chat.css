@@ -1,0 +1,21 @@
+.rce-container-input {
+    bottom: 0;
+    position: fixed;
+    padding: 20px 60px;
+}
+
+.rce-container-mlist {
+    margin-bottom: 80px;
+}
+
+.Chat-contaniner {
+    display: block;
+    height: 100%;
+    width: 100%;
+    padding: 20px 40px;
+    position: relative;
+}
+
+.fantasma {
+    overflow-y: scroll;
+}

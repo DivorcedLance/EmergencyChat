@@ -1,3 +1,9 @@
 .login{
     background-color: rgb(255, 255, 255);
 }
+
+@media screen and (max-width: 768px) {
+    .logo{
+        display: none;
+    }
+}
