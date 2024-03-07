@@ -1,0 +1,1 @@
+export const messageVapidKey = 'BJfxxfJiESlTO-67hfXlr8N6cXeGC54-TO2fIIjey1SKEJQ2SPIMBHQzFvcLQQ16F-vVUTprsJnoJQiB3IVL1Wk'
