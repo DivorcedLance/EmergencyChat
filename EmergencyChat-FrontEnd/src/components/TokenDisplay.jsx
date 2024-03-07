@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 
-import { getMessagingToken, onMessageRecieved } from '../utils/messagingToken'
+import { getMessagingToken, onMessageRecieved } from '../utils/firebaseMessaging'
 
 export function TokenDisplay() {
+
   const [messagingToken, setMessagingToken] = useState('')
 
   const activarMensajes = async () => {
@@ -21,7 +22,7 @@ export function TokenDisplay() {
 
   useEffect(() => {
     onMessageRecieved((message) => {
-      console.log('Mensaje recibido: ', message)
+      console.log('Message recieved: ', message)
       sendDesktopNotification(message.notification.title, message.notification.body)
     })
   }, [])
