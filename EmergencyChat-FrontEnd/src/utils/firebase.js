@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app";
-import { getMessaging } from "firebase/messaging"
 
 const firebaseConfig = {
   apiKey: "AIzaSyD5nYbNOlbzknjvmqEAq_2yHN1mZ80LB5w",
@@ -11,6 +10,4 @@ const firebaseConfig = {
   measurementId: "G-QTRV6LPSGK"
 };
 
-const app = initializeApp(firebaseConfig);
-export const messaging = getMessaging(app);
-export const messageVapidKey = 'BJfxxfJiESlTO-67hfXlr8N6cXeGC54-TO2fIIjey1SKEJQ2SPIMBHQzFvcLQQ16F-vVUTprsJnoJQiB3IVL1Wk'
+export const app = initializeApp(firebaseConfig);
