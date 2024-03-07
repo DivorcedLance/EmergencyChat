@@ -2,7 +2,7 @@ import requests
 import json
 from firebase_admin import credentials
 
-serviceAccountKeyJson = 'fir-notif-e0f99-firebase-adminsdk-poo90-15b6656bad.json'
+serviceAccountKeyJson = 'References\\send-notification\\fir-notif-e0f99-firebase-adminsdk-poo90-15b6656bad.json'
 project_id = "fir-notif-e0f99"
 
 def generate_access_token(service_account_file):
@@ -19,7 +19,7 @@ headers = {
 
 data = {
     "message": {
-        "token": "cOqYoXM1jZH_M84Ac9zQez:APA91bH3UX07JmZEf784VpkTla0GPsEVIshXr8HKzG7CHVfjdoeQTcwT4mZDdAAJwVTRnlfX0n-xYVCOw2gjp4CJMTAAnW8Vxk8eyZmykEdzMkFR09_EBo-fF4gyR6twHWF3RoYP882h",
+        "token": "dqhn7HZLFP5YUXA8wLVV6I:APA91bFM5Mv5Pf1RKwQVW-XbXNfIKtEjx392nKpijlycdzlpPCfUUteb_kiWG8NNXbCdFZfk1GVES719i6xnidgnlcRllTUbJ5TYnTchFgwJIXQAVQdkrAkRxYswtqfrh2-mgfeDMi7D",
         "notification": {
             "title": "Hola",
             "body": "webon",

@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
-import {getMessaging } from "firebase/messaging"
- 
+import { getMessaging } from "firebase/messaging"
+
 const firebaseConfig = {
   apiKey: "AIzaSyD5nYbNOlbzknjvmqEAq_2yHN1mZ80LB5w",
   authDomain: "fir-notif-e0f99.firebaseapp.com",
@@ -13,3 +13,4 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const messaging = getMessaging(app);
+export const messageVapidKey = 'BJfxxfJiESlTO-67hfXlr8N6cXeGC54-TO2fIIjey1SKEJQ2SPIMBHQzFvcLQQ16F-vVUTprsJnoJQiB3IVL1Wk'

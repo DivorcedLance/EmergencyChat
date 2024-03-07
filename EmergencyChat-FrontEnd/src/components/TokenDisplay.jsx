@@ -1,38 +1,35 @@
 import { useEffect, useState } from 'react'
 
-import { getToken, onMessage } from 'firebase/messaging'
-
-import { messaging } from '../utils/firebase'
-import { messageVapidKey } from '../utils/apiKeys'
+import { getMessagingToken, onMessageRecieved } from '../utils/messagingToken'
 
 export function TokenDisplay() {
-  const [displayToken, setDisplayToken] = useState('')
+  const [messagingToken, setMessagingToken] = useState('')
 
   const activarMensajes = async () => {
-    const token = await getToken(messaging, {
-      vapidKey: messageVapidKey,
-    }).catch((e) => {
-      console.log('Error al generar token: ', e)
-    })
+    setMessagingToken(await getMessagingToken())
+  }
 
-    if (token) {
-      console.log('Token:', token)
-      setDisplayToken(token)
-    } else {
-      console.log('No hay token disponible')
+  const sendDesktopNotification = (title, body) => {
+    if (!('Notification' in window)) {
+      console.log('This browser does not support desktop notification')
+      return 
+    }
+    if (Notification.permission === 'granted') {
+      new Notification(title, { body })
     }
   }
 
   useEffect(() => {
-    onMessage(messaging, (message) => {
-      console.log('tu mensaje:', message)
+    onMessageRecieved((message) => {
+      console.log('Mensaje recibido: ', message)
+      sendDesktopNotification(message.notification.title, message.notification.body)
     })
   }, [])
 
   return (
     <>
       <h1>TokenDisplay</h1>
-      <h2>{displayToken}</h2>
+      <h2>{messagingToken}</h2>
 
       <button onClick={activarMensajes}> Recibir notificaciones</button>
     </>
