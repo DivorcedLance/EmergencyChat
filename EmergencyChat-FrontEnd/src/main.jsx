@@ -7,7 +7,7 @@ import Chat from "./components/Chat/Chat.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Chat /> 
-    {/* <LoginSign /> */}
+    {/* <Chat />  */}
+    <LoginSign />
   </React.StrictMode>
 );
