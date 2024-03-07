@@ -1,5 +1,7 @@
 import './App.css'
-import { TokenDisplay } from './components/TokenDisplay'
+import { DataManager } from './components/DataManager'
+// import { LocationDisplay } from './components/LocationDisplay'
+// import { TokenDisplay } from './components/TokenDisplay'
 // import LoginSign from './components/LoginSign'
 // import Signup from './components/Signup'
 // import Login from './components/Login'
@@ -10,7 +12,7 @@ function App() {
 
   return (
     <>
-      <TokenDisplay/>
+      <DataManager />
     </>
   )
 }

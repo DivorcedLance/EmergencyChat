@@ -6,24 +6,29 @@ export function TokenDisplay() {
 
   const [messagingToken, setMessagingToken] = useState('')
 
-  const activarMensajes = async () => {
-    setMessagingToken(await getMessagingToken())
+  useEffect(() => {
+    activarMensajes();
+  }, [])
+
+  const sendMessagingToken = (messagingToken) => {
+    fetch('http://localhost:3001/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ messagingToken })
+    })
   }
 
-  const sendDesktopNotification = (title, body) => {
-    if (!('Notification' in window)) {
-      console.log('This browser does not support desktop notification')
-      return 
-    }
-    if (Notification.permission === 'granted') {
-      new Notification(title, { body })
-    }
+  const activarMensajes = async () => {
+    setMessagingToken(await getMessagingToken())
+    navigator.clipboard.writeText(messagingToken)
+    // sendMessagingToken(messagingToken)
   }
 
   useEffect(() => {
     onMessageRecieved((message) => {
       console.log('Message recieved: ', message)
-      sendDesktopNotification(message.notification.title, message.notification.body)
     })
   }, [])
 
@@ -32,7 +37,6 @@ export function TokenDisplay() {
       <h1>TokenDisplay</h1>
       <h2>{messagingToken}</h2>
 
-      <button onClick={activarMensajes}> Recibir notificaciones</button>
     </>
   )
 }
