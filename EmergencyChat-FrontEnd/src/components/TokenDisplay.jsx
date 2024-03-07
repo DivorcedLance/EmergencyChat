@@ -6,19 +6,20 @@ export function TokenDisplay() {
 
   const [messagingToken, setMessagingToken] = useState('')
 
+  
   useEffect(() => {
     activarMensajes();
   }, [])
 
-  const sendMessagingToken = (messagingToken) => {
-    fetch('http://localhost:3001/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ messagingToken })
-    })
-  }
+  // const sendMessagingToken = (messagingToken) => {
+  //   fetch('http://localhost:3001/token', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({ messagingToken })
+  //   })
+  // }
 
   const activarMensajes = async () => {
     setMessagingToken(await getMessagingToken())
