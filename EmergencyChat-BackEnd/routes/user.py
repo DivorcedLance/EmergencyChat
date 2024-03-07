@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Response, status
+from fastapi import APIRouter, Response, status, HTTPException
 from config.db import db
 from schemas.user import userEntity, usersEntity
 from models.user import User
@@ -14,7 +14,7 @@ def find_all_users():
     return usersEntity(db.users.find())
 
 
-@user.post("/create-user", response_model=User, tags=["Users"])
+@user.post("/sing-up", response_model=User, tags=["Users"])
 def create_user(user: User):
     new_user = dict(user)
     new_user["password"] = sha256_crypt.encrypt(new_user["password"])
@@ -47,3 +47,12 @@ def update_user(id: str, user: User):
 def delete_user(_id: str):
     userEntity(db.users.find_one_and_delete({"_id": ObjectId(_id)}))
     return Response(status_code=HTTP_204_NO_CONTENT)
+
+
+@user.get("/sing-in", tags=["Users"])
+def sing_in(username: str, password: str):
+    user = db.users.find_one({"username": username})
+    if user:
+        if sha256_crypt.verify(password, user["password"]):
+            return userEntity(user)
+    return HTTPException(status_code=404, detail="User not found or password incorrect")
