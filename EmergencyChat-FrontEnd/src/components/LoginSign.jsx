@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import SignUp from "./Signup";
 import Login from "./Login";
-import Solubi from "./SolUbi/Solubi";
+import Solubi from "./SolUbi/solubi";
 import Chat from "./Chat/Chat";
 import backendAPI from "../utils/backendAPI";
 import { DataManager } from "./DataManager";
@@ -21,6 +21,7 @@ export default function LoginSign() {
       logueado: false,
     },
     device: {
+      id: "",
       district: "",
       location: {
         latitude: 0.0,
@@ -30,8 +31,8 @@ export default function LoginSign() {
     },
   });
 
-  const loggearUsuario = (usuario) => {
-    setSesion((sesion.usuario = usuario));
+  const loggearUsuario = (sesion) => {
+    setSesion(sesion);
     console.log(sesion);
 
     alert("Usuario logueado");
@@ -45,6 +46,7 @@ export default function LoginSign() {
         logueado: false,
       },
       device: {
+        id: "",
         district: "",
         location: {
           latitude: 0.0,
@@ -65,6 +67,7 @@ export default function LoginSign() {
         logueado: false,
       },
       device: {
+        id: "",
         district: "",
         location: {
           latitude: la,
@@ -116,12 +119,11 @@ export default function LoginSign() {
           path="/chat/:room"
           element={
             sesion.device.location &&
-            sesion.device.token &&
+            sesion.device.deviceToken &&
             sesion.usuario.logueado ? (
               <Chat logoutSesion={logoutSesion} sesion={sesion} />
             ) : (
               <>
-                <DataManager updateDevice={updateDevice} />
                 <Solubi />
               </>
             )

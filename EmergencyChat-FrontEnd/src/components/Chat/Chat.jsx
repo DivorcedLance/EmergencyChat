@@ -6,7 +6,7 @@ import example from "./example.jpg";
 import "./Chat.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function Chat({ logOutSesion, sesion }) {
+function Chat({ logoutSesion, sesion }) {
   //EL ROOM LLEGA POR PROPS DEL INICIO
   const { room } = useParams();
 
@@ -61,12 +61,23 @@ function Chat({ logOutSesion, sesion }) {
     return <Button text={"Send"} onClick={addMessage} title="Send" />;
   };
 
+  const buttonSendImage = () => {
+    return (
+      <Button
+        text={"Images"}
+        onClick={() => {
+          
+        }}
+        title="Send"
+      />
+    );
+  }
   const buttonLogOut = () => {
     return (
       <Button
         text={"Log Out"}
         onClick={() => {
-          logOutSesion();
+          logoutSesion();
           window.location.href = "/";
         }}
         title="Log Out"
@@ -77,7 +88,7 @@ function Chat({ logOutSesion, sesion }) {
   return (
     <div className="Chat-contaniner">
       <Navbar
-        left={<div>{usuario.username}</div>}
+        left={<div>{sesion.usuario.username}</div>}
         center={<div>{room}</div>}
         right={buttonLogOut()}
       />

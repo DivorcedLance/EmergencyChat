@@ -34,16 +34,17 @@ export default function Signup({ loggearUsuario, sesion }) {
           logueado: true,
         },
         device: {
+          id: response.device._id,
           district: response.device.district,
           location: {
-            latitude: sesion.device.latitude,
-            longitude: sesion.device.longitude,
+            latitude: response.device.latitude,
+            longitude: response.device.longitude,
           },
-          deviceToken: sesion.device.device_token,
+          deviceToken: response.device.device_token,
         },
       });
 
-      navigate("/chat/VENTANILLA"); 
+      navigate(`/chat/${response.device.district}`); 
     }
   };
 

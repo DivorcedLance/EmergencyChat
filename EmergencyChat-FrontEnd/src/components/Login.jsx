@@ -8,17 +8,21 @@ export default function Login({ sesion, loggearUsuario }) {
   const navigate = useNavigate();
 
   const login = async (event) => {
-
     event.preventDefault();
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-    const response = await backendAPI.get(
-      `sing-in?username=${username}&password=${password}`
+    console.log(sesion);
+    const response = await backendAPI.post(
+      `sign-in?username=${username}&password=${password}`,
+      {
+        latitude: sesion.device.location.latitude,
+        longitude: sesion.device.location.longitude,
+        device_token: sesion.device.deviceToken
+      }
     );
     console.log(response);
 
-
-    if (response.detail) {
+    /* if (response.detail) {
       alert("Usuario o contraseña incorrectos");
       document.getElementById("username").value = "";
       document.getElementById("password").value = "";
@@ -28,10 +32,10 @@ export default function Login({ sesion, loggearUsuario }) {
           id: response._id,
           username: response.username,
           logueado: true,
-        }
+        },
       });
       navigate("/chat/VENTANILLA");
-    }
+    } */
   };
 
   return (
