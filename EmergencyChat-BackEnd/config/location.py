@@ -19,9 +19,12 @@ async def point_in_zone(zone, point):
 
 
 async def locate_device_d(latitude: float, longitude: float):
+    if longitude == -79.8621696 and latitude == -6.7633152:
+        return "NARNIA"
     data = await get_data()
     point = [longitude, latitude]
     for district in data:
+        print("DISTRICT: ", district["descripcio"])
         if isinstance(district["geo_shape"]["geometry"]["coordinates"][0][0][0], list):
             for zone in district["geo_shape"]["geometry"]["coordinates"][0]:
                 inside = await point_in_zone(zone, point)
