@@ -32,7 +32,7 @@ export default function LoginSign() {
       deviceToken: "",
     },
   });
-
+  
   const loggearUsuario = (sesion) => {
     setSesion(sesion);
     console.log(sesion);
