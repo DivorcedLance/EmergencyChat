@@ -5,15 +5,12 @@ import backendAPI from '../utils/backendAPI.js'
 
 export default function Login({loggearUsuario}) {
 
-  const login = () => {
+  async function login () {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-    const usuarios = backendAPI.get("find-all");
-    setTimeout(() => {
-      console.log(usuarios);
+    const usuarios = await backendAPI.get("find-all");
+    console.log(usuarios);
 
-    }, 5000);
-    
     usuarios.forEach(usuario => {
       if(usuario.username === username && usuario.password === password){
         console.log("Usuario encontrado");

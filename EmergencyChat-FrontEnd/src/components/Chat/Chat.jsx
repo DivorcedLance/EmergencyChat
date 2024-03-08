@@ -57,15 +57,6 @@ function Chat() {
     return <Button text={"Send"} onClick={addMessage} title="Send" />;
   };
 
-  const scrollToBottom = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, []);
 
   return (
       <div className="Chat-contaniner">

@@ -32,7 +32,7 @@ export default function LoginSign() {
     alert("Your browser does not support geolocation");
   } */
 
-  const loggearUsuario = (usuario) => {
+  async function loggearUsuario(usuario) {
     setUsuario(usuario);
     console.log(usuario);
   };

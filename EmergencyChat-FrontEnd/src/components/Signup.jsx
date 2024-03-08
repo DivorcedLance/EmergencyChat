@@ -5,7 +5,8 @@ import backendAPI from '../utils/backendAPI.js'
 
 export default function Signup() {
 
-  const register = () => {
+  const register = (event) => {
+    event.preventDefault();
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
     backendAPI.post("sing-up", { username, password });
@@ -14,7 +15,7 @@ export default function Signup() {
   return (
     <div className="login template d-flex justify-content-center align-items-center vh-100">
       <div className="w-50 p-5 mx-5 rounded bg-white shadow-lg">
-        <form>
+        <form onSubmit={register}>
           <h3 className="text-center">Registro</h3>
           <div className="mb2 py-2">
             <label htmlFor="username" className="form-label">
@@ -39,7 +40,7 @@ export default function Signup() {
             />
           </div>
           <div className="d-grid mt-3 py-2">
-            <button type="submit" className="btn btn-primary" onClick={register}>
+            <button type="submit" className="btn btn-primary">
               Registrarse
             </button>
           </div>
