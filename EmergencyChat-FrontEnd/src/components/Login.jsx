@@ -1,9 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import loginimg from "../assets/loginIMG.svg";
 import "./LoginSign.css";
+import { useNavigate } from "react-router-dom";
 import backendAPI from "../utils/backendAPI.js";
 
 export default function Login({ loggearUsuario }) {
+  const navigate = useNavigate();
+
   const login = async (event) => {
     event.preventDefault();
     const username = document.getElementById("username").value;
@@ -15,12 +18,15 @@ export default function Login({ loggearUsuario }) {
 
     if (response.detail) {
       alert("Usuario o contraseña incorrectos");
+      document.getElementById("username").value = "";
+      document.getElementById("password").value = "";
     } else {
       loggearUsuario({
         id: response._id,
         username: response.username,
         logueado: true,
       });
+      navigate("/chat/VENTANILLA");
     }
   };
 
