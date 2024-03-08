@@ -73,16 +73,18 @@ function Chat({ logoutSesion, sesion }) {
     }
     ws.current = new WebSocket(`ws://localhost:8000/ws/${room}/${sesion.usuario.id}`);
     ws.current.onmessage = (event) => {
-      console.log(event);
+      const data = JSON.parse(event.data);
+
+      console.log(data);
       //VIENEN LOS IF
-      const newMessage = {
+      /* const newMessage = {
         position: "right",
         type: "text",
         title: "Emre",
         text: event.data,
         date: new Date(),
       };
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      setMessages((prevMessages) => [...prevMessages, newMessage]); */
     };
     return () => {
       ws.current.close();
