@@ -85,27 +85,28 @@ function Chat({ logoutSesion, sesion }) {
     if (ws.current) {
       ws.current.close();
     }
-    ws.current = new WebSocket(`ws://localhost:8000/ws/${room}/${sesion.usuario.id}`);
-    
+    ws.current = new WebSocket(`ws://localhost:8000/ws/${room}`);
+
     ws.current.onopen = () => {
       ws.current.send(JSON.stringify({
         event: 'connection',
         room: room,
         session: {
           client: {
-            client_id: clientID,
-            username: clientID,
-            logueado: false,
+            id: sesion.usuario.id,
+            username: sesion.usuario.username,
+            logueado: sesion.usuario.logueado,
           },
           device: {
-            device_id: "",
-            deviceToken: "",
-            district: "",
-            district_id: room,
-            location: {
-              longitude: 0.0,
-              latitude: 0.0,
+            district: {
+              id: room,
+              name: sesion.device.district.name,
             },
+            location: {
+              longitude: sesion.device.location.longitude,
+              latitude: sesion.device.location.latitude,
+            },
+            deviceToken: sesion.device.deviceToken,
           }
         },
       }));
@@ -118,9 +119,9 @@ function Chat({ logoutSesion, sesion }) {
       
       if(data.event === "message"){
         const newMessage = {
-          position: data.client === sesion.usuario.id ? "right" : "left",
+          position: data.sesion.usuario.username === sesion.usuario.username ? "right" : "left",
           type: "text",
-          title: data.client,
+          title: data.sesion.usuario.username,
           text: data.message,
           date: new Date(),
         };
