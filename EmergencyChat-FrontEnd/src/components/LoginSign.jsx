@@ -3,13 +3,13 @@ import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUp from "./Signup";
 import Login from "./Login";
-import Solubi from "./SolUbi/Solubi";
+import Solubi from "./SolUbi/solubi";
 import Chat from "./Chat/Chat";
 
 export default function LoginSign() {
   const [usuario, setUsuario] = useState({
+    id: "",
     username: "",
-    password: "",
     logueado: false,
   });
 
@@ -35,6 +35,7 @@ export default function LoginSign() {
   async function loggearUsuario(usuario) {
     setUsuario(usuario);
     console.log(usuario);
+    alert("Usuario logueado");
   };
 
   return (

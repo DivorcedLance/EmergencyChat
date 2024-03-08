@@ -1,26 +1,27 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import loginimg from "../assets/loginIMG.svg";
 import "./LoginSign.css";
-import backendAPI from '../utils/backendAPI.js'
+import backendAPI from "../utils/backendAPI.js";
 
-export default function Login({loggearUsuario}) {
-
-  async function login () {
+export default function Login({ loggearUsuario }) {
+  const login = async (event) => {
+    event.preventDefault();
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-    const usuarios = await backendAPI.get("find-all");
-    console.log(usuarios);
+    const response = await backendAPI.get(
+      `sing-in?username=${username}&password=${password}`
+    );
+    console.log(response);
 
-    usuarios.forEach(usuario => {
-      if(usuario.username === username && usuario.password === password){
-        console.log("Usuario encontrado");
-        loggearUsuario({
-          username: username,
-          password: password,
-          logueado: true
-        });
-      }
-    });
+    if (response.detail) {
+      alert("Usuario o contraseña incorrectos");
+    } else {
+      loggearUsuario({
+        id: response._id,
+        username: response.username,
+        logueado: true,
+      });
+    }
   };
 
   return (

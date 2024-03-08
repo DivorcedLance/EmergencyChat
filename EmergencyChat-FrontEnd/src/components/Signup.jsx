@@ -1,15 +1,25 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import signimg from "../assets/singupIMG.svg";
 import "./LoginSign.css";
-import backendAPI from '../utils/backendAPI.js'
+import backendAPI from "../utils/backendAPI.js";
 
-export default function Signup() {
-
-  const register = (event) => {
+export default function Signup({ loggearUsuario }) {
+  const register = async (event) => {
     event.preventDefault();
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-    backendAPI.post("sing-up", { username, password });
+    const response = await backendAPI.post("sing-up", { username, password });
+    console.log(response);
+
+    if (response.detail) {
+      alert(response.detail);
+    } else {
+      loggearUsuario({
+        id: response._id,
+        username: response.username,
+        logueado: true,
+      });
+    }
   };
 
   return (
