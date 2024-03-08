@@ -22,6 +22,7 @@ export default function Login({ sesion, loggearUsuario }) {
     );
     console.log(response);
 
+      
     /* if (response.detail) {
       alert("Usuario o contraseña incorrectos");
       document.getElementById("username").value = "";
