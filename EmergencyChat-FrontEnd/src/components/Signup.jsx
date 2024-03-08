@@ -2,23 +2,48 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import signimg from "../assets/singupIMG.svg";
 import "./LoginSign.css";
 import backendAPI from "../utils/backendAPI.js";
+import { useNavigate } from "react-router-dom";
 
-export default function Signup({ loggearUsuario }) {
+export default function Signup({ loggearUsuario, sesion }) {
+  const navigate = useNavigate();
+
   const register = async (event) => {
     event.preventDefault();
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-    const response = await backendAPI.post("sing-up", { username, password });
+    const response = await backendAPI.post("sign-up", {
+      user: {
+        username: username,
+        password: password,
+      },
+      device: {
+        latitude: sesion.device.location.latitude,
+        longitude: sesion.device.location.longitude,
+        device_token: sesion.device.deviceToken,
+      },
+    });
     console.log(response);
 
     if (response.detail) {
       alert(response.detail);
     } else {
       loggearUsuario({
-        id: response._id,
-        username: response.username,
-        logueado: true,
+        usuario: {
+          id: response.device.user_id,
+          username: response.user.username,
+          logueado: true,
+        },
+        device: {
+          district: response.device.district,
+          location: {
+            latitude: sesion.device.latitude,
+            longitude: sesion.device.longitude,
+          },
+          deviceToken: sesion.device.device_token,
+        },
       });
+
+      navigate("/chat/VENTANILLA"); 
     }
   };
 

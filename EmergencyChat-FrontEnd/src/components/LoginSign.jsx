@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,80 +10,115 @@ import SignUp from "./Signup";
 import Login from "./Login";
 import Solubi from "./SolUbi/solubi";
 import Chat from "./Chat/Chat";
+import backendAPI from "../utils/backendAPI";
+import { DataManager } from "./DataManager";
 
 export default function LoginSign() {
-  const [usuario, setUsuario] = useState({
-    id: "",
-    username: "",
-    logueado: false,
-  });
-
-  const [ubicacionDisponible, setUbicacionDisponible] = useState(false);
-
-  const getUbicacion = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          console.log(position);
-          setUbicacionDisponible(true);
-          //estoyaca es la posicion en latitud y longitud que debe pasarse al back
-          const estoyaca = [
-            position.coords.longitude,
-            position.coords.latitude,
-          ];
-          console.log(`Longitud: ${estoyaca[0]} Latitud: ${estoyaca[1]}`);
-        },
-        function (error) {
-          console.log(error);
-        }
-      );
-    } else {
-      alert("Your browser does not support geolocation");
-    }
-  };
-
-  const loggearUsuario = (usuario) => {
-    setUsuario(usuario);
-    console.log(usuario);
-    console.log(ubicacionDisponible);
-
-    alert("Usuario logueado");
-  }
-
-  const logoutUsuario = () => {
-    setUsuario({
+  const [sesion, setSesion] = useState({
+    usuario: {
       id: "",
       username: "",
       logueado: false,
-    });
-    alert("Usuario deslogueado");
-  }
+    },
+    device: {
+      district: "",
+      location: {
+        latitude: 0.0,
+        longitude: 0.0,
+      },
+      deviceToken: "",
+    },
+  });
 
-  getUbicacion();
+  const loggearUsuario = (usuario) => {
+    setSesion((sesion.usuario = usuario));
+    console.log(sesion);
+
+    alert("Usuario logueado");
+  };
+
+  const logoutSesion = () => {
+    setSesion({
+      usuario: {
+        id: "",
+        username: "",
+        logueado: false,
+      },
+      device: {
+        district: "",
+        location: {
+          latitude: 0.0,
+          longitude: 0.0,
+        },
+        deviceToken: "",
+      },
+    });
+    
+    alert("Usuario deslogueado");
+  };
+
+  const updateDevice = (la, lo, token) => {
+    setSesion({
+      usuario: {
+        id: "",
+        username: "",
+        logueado: false,
+      },
+      device: {
+        district: "",
+        location: {
+          latitude: la,
+          longitude: lo,
+        },
+        deviceToken: token,
+      },
+    });
+  };
+
+  useEffect(() => {
+    console.log("Sesión actualizada:", sesion);
+  }, [sesion]);
+
   return (
     <Router>
       <Routes>
         <Route
           path="/"
           element={
-            ubicacionDisponible && !usuario.logueado ? (
-              <Login user={usuario} loggearUsuario={loggearUsuario} />
-            ) : (
-              <Solubi />
-            )
+            <>
+              <DataManager updateDevice={updateDevice} />
+              {sesion.device.location &&
+              sesion.device.deviceToken &&
+              !sesion.usuario.logueado ? (
+                <Login sesion={sesion} loggearUsuario={loggearUsuario} />
+              ) : (
+                <Solubi />
+              )}
+            </>
           }
         />
         <Route
           path="/signup"
           element={
-            ubicacionDisponible && !usuario.logueado ? <SignUp /> : <Solubi />
+            <>
+              <DataManager updateDevice={updateDevice} />
+              {sesion.device.location &&
+              sesion.device.deviceToken &&
+              !sesion.usuario.logueado ? (
+                <SignUp sesion={sesion} loggearUsuario={loggearUsuario} />
+              ) : (
+                <Solubi />
+              )}
+            </>
           }
         />
         <Route
           path="/chat/:room"
           element={
-            ubicacionDisponible && usuario.logueado ? (
-              <Chat usuario={usuario} />
+            sesion.device.location &&
+            sesion.device.token &&
+            sesion.usuario.logueado ? (
+              <Chat logoutSesion={logoutSesion} sesion={sesion} />
             ) : (
               <Solubi />
             )

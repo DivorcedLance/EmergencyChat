@@ -6,7 +6,7 @@ import example from "./example.jpg";
 import "./Chat.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function Chat({ usuario }) {
+function Chat({ logOutSesion, sesion }) {
   //EL ROOM LLEGA POR PROPS DEL INICIO
   const { room } = useParams();
 
@@ -66,16 +66,21 @@ function Chat({ usuario }) {
       <Button
         text={"Log Out"}
         onClick={() => {
+          logOutSesion();
           window.location.href = "/";
         }}
         title="Log Out"
       />
     );
-  }
+  };
 
   return (
     <div className="Chat-contaniner">
-      <Navbar left={<div>{usuario.username}</div>} center={<div>{room}</div>} right={buttonLogOut()}/>
+      <Navbar
+        left={<div>{usuario.username}</div>}
+        center={<div>{room}</div>}
+        right={buttonLogOut()}
+      />
       <MessageList lockable={true} toBottomHeight={10} dataSource={messages} />
       <div className="fantasma" ref={scrollRef}></div>
       <Input
