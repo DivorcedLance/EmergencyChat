@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import SignUp from "./Signup";
 import Login from "./Login";
-import Solubi from "./SolUbi/Solubi";
+import Solubi from "./SolUbi/solubi";
 import Chat from "./Chat/Chat";
 import backendAPI from "../utils/backendAPI";
 import { DataManager } from "./DataManager";
@@ -21,8 +21,10 @@ export default function LoginSign() {
       logueado: false,
     },
     device: {
-      id: "",
-      district: "",
+      district: {
+        id: "",
+        name: "",
+      },
       location: {
         latitude: 0.0,
         longitude: 0.0,
@@ -46,8 +48,10 @@ export default function LoginSign() {
         logueado: false,
       },
       device: {
-        id: "",
-        district: "",
+        district: {
+          id: "",
+          name: "",
+        },
         location: {
           latitude: 0.0,
           longitude: 0.0,
@@ -67,8 +71,10 @@ export default function LoginSign() {
         logueado: false,
       },
       device: {
-        id: "",
-        district: "",
+        district: {
+          id: "",
+          name: "",
+        },
         location: {
           latitude: la,
           longitude: lo,

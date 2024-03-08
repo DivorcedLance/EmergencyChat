@@ -17,26 +17,35 @@ export default function Login({ sesion, loggearUsuario }) {
       {
         latitude: sesion.device.location.latitude,
         longitude: sesion.device.location.longitude,
-        device_token: sesion.device.deviceToken
+        device_token: sesion.device.deviceToken,
       }
     );
     console.log(response);
 
-      
-    /* if (response.detail) {
-      alert("Usuario o contraseña incorrectos");
-      document.getElementById("username").value = "";
-      document.getElementById("password").value = "";
+    if (response.detail) {
+      alert(response.detail);
     } else {
       loggearUsuario({
         usuario: {
-          id: response._id,
-          username: response.username,
+          id: response.device.user_id,
+          username: response.user.username,
           logueado: true,
         },
+        device: {
+          district: {
+            id: response.device.district_id,
+            name: response.device.district,
+          },
+          location: {
+            latitude: response.device.latitude,
+            longitude: response.device.longitude,
+          },
+          deviceToken: response.device.device_token,
+        },
       });
-      navigate("/chat/VENTANILLA");
-    } */
+
+      navigate(`/chat/${response.device.district}`);
+    }
   };
 
   return (

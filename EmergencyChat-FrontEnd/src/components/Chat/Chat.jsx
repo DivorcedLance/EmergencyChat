@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import "react-chat-elements/dist/main.css";
-import { MessageList, Button, Input, Navbar } from "react-chat-elements";
+import { MessageList, Button, Input, Navbar, SystemMessage } from "react-chat-elements";
 import { useParams } from "react-router-dom";
 import example from "./example.jpg";
 import "./Chat.css";
@@ -42,15 +42,13 @@ function Chat({ logoutSesion, sesion }) {
   const addMessage = () => {
     //Se modifica title con el nombre del usuario logueado
     if (inputReferance.current.value === "") return;
-    const newMessage = {
-      position: "right",
-      type: "text",
-      title: "Emre",
-      text: message,
-      date: new Date(),
-    };
-    setMessage("");
-    ws.current.send(message);
+    ws.current.send(JSON.stringify({
+      event: 'message',
+      room: room,
+      client: sesion.usuario.id,
+      message: message,
+    }));
+
     inputReferance.current.value = "";
     /* setMessages([...messages, newMessage]);
     
@@ -74,8 +72,31 @@ function Chat({ logoutSesion, sesion }) {
     ws.current = new WebSocket(`ws://localhost:8000/ws/${room}/${sesion.usuario.id}`);
     ws.current.onmessage = (event) => {
       const data = JSON.parse(event.data);
-
       console.log(data);
+      
+      if(data.event === "message"){
+        const newMessage = {
+          position: data.client === sesion.usuario.id ? "right" : "left",
+          type: "text",
+          title: data.client,
+          text: data.message,
+          date: new Date(),
+        };
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+      } else if(data.event === "connection"){
+        const newMessage = {
+          type: "system",
+          text: data.message,
+        };
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        /* document.getElementsByClassName("rce-mlist").appendChild(
+          <SystemMessage
+            text={data.message}
+          />
+        ); */
+        
+      }
+
       //VIENEN LOS IF
       /* const newMessage = {
         position: "right",

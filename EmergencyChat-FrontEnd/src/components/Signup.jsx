@@ -34,8 +34,10 @@ export default function Signup({ loggearUsuario, sesion }) {
           logueado: true,
         },
         device: {
-          id: response.device._id,
-          district: response.device.district,
+          district: {
+            id: response.device.district_id,
+            name: response.device.district,
+          },
           location: {
             latitude: response.device.latitude,
             longitude: response.device.longitude,

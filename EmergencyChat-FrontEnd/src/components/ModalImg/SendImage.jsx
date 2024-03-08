@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { Button, Popup } from 'react-chat-elements'
 import ModalIMG from './ModalIMG'
+import './SengImage.css'
 export default function SendImage() {
     const [show, setShow] = useState(false);
 
