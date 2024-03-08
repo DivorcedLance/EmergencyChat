@@ -53,7 +53,7 @@ export default function LoginSign() {
         deviceToken: "",
       },
     });
-    
+
     alert("Usuario deslogueado");
   };
 
@@ -85,31 +85,31 @@ export default function LoginSign() {
         <Route
           path="/"
           element={
-            <>
-              <DataManager updateDevice={updateDevice} />
-              {sesion.device.location &&
-              sesion.device.deviceToken &&
-              !sesion.usuario.logueado ? (
-                <Login sesion={sesion} loggearUsuario={loggearUsuario} />
-              ) : (
+            sesion.device.location &&
+            sesion.device.deviceToken &&
+            !sesion.usuario.logueado ? (
+              <Login sesion={sesion} loggearUsuario={loggearUsuario} />
+            ) : (
+              <>
+                <DataManager updateDevice={updateDevice} />
                 <Solubi />
-              )}
-            </>
+              </>
+            )
           }
         />
         <Route
           path="/signup"
           element={
-            <>
-              <DataManager updateDevice={updateDevice} />
-              {sesion.device.location &&
-              sesion.device.deviceToken &&
-              !sesion.usuario.logueado ? (
-                <SignUp sesion={sesion} loggearUsuario={loggearUsuario} />
-              ) : (
+            sesion.device.location &&
+            sesion.device.deviceToken &&
+            !sesion.usuario.logueado ? (
+              <SignUp sesion={sesion} loggearUsuario={loggearUsuario} />
+            ) : (
+              <>
+                <DataManager updateDevice={updateDevice} />
                 <Solubi />
-              )}
-            </>
+              </>
+            )
           }
         />
         <Route
@@ -120,7 +120,10 @@ export default function LoginSign() {
             sesion.usuario.logueado ? (
               <Chat logoutSesion={logoutSesion} sesion={sesion} />
             ) : (
-              <Solubi />
+              <>
+                <DataManager updateDevice={updateDevice} />
+                <Solubi />
+              </>
             )
           }
         />
