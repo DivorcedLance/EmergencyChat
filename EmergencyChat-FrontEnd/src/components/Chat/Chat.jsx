@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import example from "./example.jpg";
 import "./Chat.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import SendImage from "../ModalImg/SendImage";
 
 function Chat({ logoutSesion, sesion }) {
   //EL ROOM LLEGA POR PROPS DEL INICIO
@@ -58,20 +59,17 @@ function Chat({ logoutSesion, sesion }) {
   };
 
   const buttonSend = () => {
-    return <Button text={"Send"} onClick={addMessage} title="Send" />;
+    return (
+      <>
+        <SendImage />
+        <Button text={"Send"} onClick={addMessage} title="Send" />
+      </>
+    );
   };
 
   const buttonSendImage = () => {
-    return (
-      <Button
-        text={"Images"}
-        onClick={() => {
-          
-        }}
-        title="Send"
-      />
-    );
-  }
+    return <SendImage />;
+  };
   const buttonLogOut = () => {
     return (
       <Button

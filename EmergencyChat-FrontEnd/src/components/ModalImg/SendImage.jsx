@@ -1,10 +1,14 @@
 import React from 'react'
 import { useState } from 'react'
 import { Button, Popup } from 'react-chat-elements'
-
+import ModalIMG from './ModalIMG'
 export default function SendImage() {
     const [show, setShow] = useState(false);
-    
+
+    const modalIMG = () => {
+        return <ModalIMG />
+    }
+
     const popup = {
         show:show,
         header:"Example Popup",
@@ -18,7 +22,7 @@ export default function SendImage() {
                 },
             },
         ],
-        text:"Here is a sample popup component to use in your projects.",
+        renderContent: modalIMG,
         footerButtons: [
             {
                 color: "white",
