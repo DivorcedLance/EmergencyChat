@@ -85,7 +85,21 @@ export default function LoginSign() {
   };
 
   useEffect(() => {
+    const storedData = localStorage.getItem("sesion");
+    if (storedData) {
+      setSesion(JSON.parse(storedData));
+    }
+  }, []);
+
+  useEffect(() => {
     console.log("Sesión actualizada:", sesion);
+    const handleBeforeUnload = () => {
+      localStorage.setItem("sesion", JSON.stringify(sesion));
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
   }, [sesion]);
 
   return (

@@ -44,7 +44,7 @@ export default function Login({ sesion, loggearUsuario }) {
         },
       });
 
-      navigate(`/chat/${response.device.district}`);
+      navigate(`/chat/${response.device.district_id}`);
     }
   };
 

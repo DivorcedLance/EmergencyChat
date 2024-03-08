@@ -46,7 +46,7 @@ export default function Signup({ loggearUsuario, sesion }) {
         },
       });
 
-      navigate(`/chat/${response.device.district}`); 
+      navigate(`/chat/${response.device.district_id}`); 
     }
   };
 
