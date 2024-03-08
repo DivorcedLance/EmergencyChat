@@ -41,7 +41,7 @@ class ConnectionManager:
         print("conectionActions", data)
         await self.broadcast({
             "event": "connection",
-            "username": data["session"]["client"]["username"],
+            "username": data["sesion"]["usuario"]["username"],
             "room": room
         }, room)
 
@@ -49,7 +49,7 @@ class ConnectionManager:
         print("disconectionActions", data)
         await  self.broadcast({
             "event": "disconnection",
-            "username": data["session"]["client"]["username"],
+            "username": data["sesion"]["usuario"]["username"],
             "room": room
         }, room)
 
@@ -57,7 +57,7 @@ class ConnectionManager:
         print("messageActions", data)
         await self.broadcast({
             "event": "message",
-            "username": data["session"]["client"]["username"],
+            "username": data["sesion"]["usuario"]["username"],
             "message": data["message"],
             "room": room
         }, room)

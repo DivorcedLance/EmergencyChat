@@ -17,21 +17,22 @@ function ChatApp() {
       ws.current.send(JSON.stringify({
         event: 'connection',
         room: room,
-        session: {
-          client: {
-            client_id: clientID,
+        sesion: {
+          usuario: {
+            id: clientID,
             username: clientID,
-            logueado: false,
+            logueado: true,
           },
           device: {
-            device_id: "",
-            deviceToken: "",
-            district: "",
-            district_id: room,
-            location: {
-              longitude: 0.0,
-              latitude: 0.0,
+            district: {
+              id: room,
+              name: "",
             },
+            location: {
+              latitude: 0.0,
+              longitude: 0.0,
+            },
+            deviceToken: "",
           }
         },
       }));
@@ -52,21 +53,22 @@ function ChatApp() {
       ws.current.send(JSON.stringify({
         event: 'message',
         room: room,
-        session: {
-          client: {
-            client_id: clientID,
+        sesion: {
+          usuario: {
+            id: clientID,
             username: clientID,
-            logueado: false,
+            logueado: true,
           },
           device: {
-            device_id: "",
-            deviceToken: "",
-            district: "",
-            district_id: room,
-            location: {
-              longitude: 0.0,
-              latitude: 0.0,
+            district: {
+              id: room,
+              name: "",
             },
+            location: {
+              latitude: 0.0,
+              longitude: 0.0,
+            },
+            deviceToken: "",
           }
         },
         message: message,
