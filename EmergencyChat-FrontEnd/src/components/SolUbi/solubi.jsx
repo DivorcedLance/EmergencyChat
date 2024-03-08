@@ -1,4 +1,3 @@
-import React from 'react'
 import solubiIMG from '../../assets/solubiIMG.svg'
 import "bootstrap/dist/css/bootstrap.min.css";
 
