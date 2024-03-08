@@ -13,7 +13,8 @@ function ChatApp() {
     }
     ws.current = new WebSocket(`ws://localhost:8000/ws/${room}/${clientID}`);
     ws.current.onmessage = (event) => {
-      setMessages((prevMessages) => [...prevMessages, event.data]);
+      const data = JSON.parse(event.data);
+      setMessages((prevMessages) => [...prevMessages, data]);
     };
     return () => {
       ws.current.close();
@@ -22,7 +23,12 @@ function ChatApp() {
 
   const sendMessage = () => {
     if (message !== '') {
-      ws.current.send(message);
+      ws.current.send(JSON.stringify({
+        event: 'message',
+        room: room,
+        client: clientID,
+        message: message,
+      }));
       setMessage('');
     }
   };
@@ -56,7 +62,7 @@ function ChatApp() {
       </div>
       <div>
         {messages.map((msg, index) => (
-          <div key={index}>{msg}</div>
+          <div key={index}>{msg.client}: {msg.message}</div>
         ))}
       </div>
     </div>
