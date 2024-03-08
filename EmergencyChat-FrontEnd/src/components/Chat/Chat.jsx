@@ -45,23 +45,7 @@ function Chat({ logoutSesion, sesion }) {
     ws.current.send(JSON.stringify({
       event: 'connection',
       room: room,
-      session: {
-        client: {
-          client_id: sesion.usuario.id,
-          username: sesion.usuario.username,
-          logueado: true,
-        },
-        device: {
-          device_id: "",
-          deviceToken: sesion.device.deviceToken,
-          district: sesion.device.district.name,
-          district_id: sesion.device.district.id,
-          location: {
-            longitude: sesion.device.location.longitude,
-            latitude: sesion.device.location.latitude,
-          },
-        }
-      },
+      sesion: sesion,
       message: message,
     }));
 
@@ -91,24 +75,7 @@ function Chat({ logoutSesion, sesion }) {
       ws.current.send(JSON.stringify({
         event: 'connection',
         room: room,
-        session: {
-          client: {
-            id: sesion.usuario.id,
-            username: sesion.usuario.username,
-            logueado: sesion.usuario.logueado,
-          },
-          device: {
-            district: {
-              id: room,
-              name: sesion.device.district.name,
-            },
-            location: {
-              longitude: sesion.device.location.longitude,
-              latitude: sesion.device.location.latitude,
-            },
-            deviceToken: sesion.device.deviceToken,
-          }
-        },
+        sesion: sesion,
       }));
     }
 
@@ -119,11 +86,12 @@ function Chat({ logoutSesion, sesion }) {
       
       if(data.event === "message"){
         const newMessage = {
-          position: data.sesion.usuario.username === sesion.usuario.username ? "right" : "left",
+          position: data.username === sesion.usuario.username ? "right" : "left",
           type: "text",
-          title: data.sesion.usuario.username,
+          title: data.username,
           text: data.message,
           date: new Date(),
+          room: data.room,
         };
         setMessages((prevMessages) => [...prevMessages, newMessage]);
       } else if(data.event === "connection"){
