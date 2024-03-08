@@ -4,12 +4,18 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUp from "./Signup";
 import Login from "./Login";
 import Solubi from "./SolUbi/Solubi";
+import Chat from "./Chat/Chat";
 
 export default function LoginSign() {
+  const [usuario, setUsuario] = useState({
+    username: "",
+    password: "",
+    logueado: false,
+  });
 
-  const [ubicacionDisponible, setUbicacionDisponible] = useState(false);
+  const [ubicacionDisponible, setUbicacionDisponible] = useState(true);
 
-  if (navigator.geolocation) {
+  /* if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       function (position) {
         console.log(position);
@@ -24,16 +30,36 @@ export default function LoginSign() {
     );
   } else {
     alert("Your browser does not support geolocation");
-  }
+  } */
+
+  const loggearUsuario = (usuario) => {
+    setUsuario(usuario);
+    console.log(usuario);
+  };
 
   return (
     <Router>
       <Routes>
         <Route
           path="/"
-          element={ubicacionDisponible ? <Login /> : <Solubi />}
+          element={
+            ubicacionDisponible ? (
+              <Login loggearUsuario={loggearUsuario} />
+            ) : (
+              <Solubi />
+            )
+          }
         />
-        <Route path="/signup" element={ubicacionDisponible ? <SignUp /> : <Solubi />} />
+        <Route
+          path="/signup"
+          element={ubicacionDisponible ? <SignUp /> : <Solubi />}
+        />
+        <Route
+          path="/chat"
+          element={
+            ubicacionDisponible && usuario.logueado ? <Chat /> : <Solubi />
+          }
+        />
       </Routes>
     </Router>
   );
