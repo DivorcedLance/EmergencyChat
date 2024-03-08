@@ -42,6 +42,7 @@ class ConnectionManager:
         await self.broadcast({
             "event": "connection",
             "username": data["sesion"]["usuario"]["username"],
+            "client_id": data["sesion"]["usuario"]["id"],
             "room": room
         }, room)
 
@@ -50,6 +51,7 @@ class ConnectionManager:
         await  self.broadcast({
             "event": "disconnection",
             "username": data["sesion"]["usuario"]["username"],
+            "client_id": data["sesion"]["usuario"]["id"],
             "room": room
         }, room)
 
@@ -58,6 +60,7 @@ class ConnectionManager:
         await self.broadcast({
             "event": "message",
             "username": data["sesion"]["usuario"]["username"],
+            "client_id": data["sesion"]["usuario"]["id"],
             "message": data["message"],
             "room": room
         }, room)
