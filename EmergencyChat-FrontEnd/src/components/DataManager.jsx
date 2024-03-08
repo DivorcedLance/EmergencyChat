@@ -12,8 +12,8 @@ export function DataManager({ updateDevice }) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         function (position) {
-          setLocation([position.coords.longitude, position.coords.latitude]);
-          // setLocation([-76.9327104, -12.1831424]);
+          setLocation([-77.0649444066673,-11.994909663438648]);
+          // setLocation([-77.1337, -11.8944]);
         },
         function (error) {
           console.log(error);

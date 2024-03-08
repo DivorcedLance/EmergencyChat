@@ -5,5 +5,5 @@ dist = APIRouter()
 
 
 @dist.get("/districts")
-def get_districts():
-    return db.districts.find()
+async def get_districts():
+    return await db.districts.find()

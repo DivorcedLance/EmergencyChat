@@ -3,10 +3,7 @@ from routes.user import user, getTokensFromDistric
 from config.docs import tags_metadata
 from starlette.middleware.cors import CORSMiddleware
 from routes.device import device
-
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import messaging
+from routes.district import dist
 
 app = FastAPI(
     title="EmergencyChat-BackEnd",
@@ -17,6 +14,7 @@ app = FastAPI(
 
 app.include_router(user)
 app.include_router(device)
+app.include_router(dist)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -58,6 +56,7 @@ class ConnectionManager:
         }, room)
 
     async def messageActions(self, data: dict, room: str):
+
         await self.broadcast({
             "event": "message",
             "username": data["sesion"]["usuario"]["username"],

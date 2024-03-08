@@ -11,10 +11,13 @@ import { useParams } from "react-router-dom";
 import "./Chat.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SendImage from "../ModalImg/SendImage";
+import Dropdown from "react-bootstrap/Dropdown";
 
 function Chat({ logoutSesion, sesion }) {
   //EL ROOM LLEGA POR PROPS DEL INICIO
-  const { room } = useParams();
+  const { p_room } = useParams();
+
+  const { room, setRoom } = useState(p_room);
 
   const scrollRef = useRef();
   const inputReferance = useRef(null);
@@ -114,7 +117,11 @@ function Chat({ logoutSesion, sesion }) {
       <Navbar
         left={<div>{sesion.usuario.username}</div>}
         center={<div>{room}</div>}
-        right={buttonLogOut()}
+        right={
+          <>
+            {buttonLogOut()}
+          </>
+        }
       />
       <MessageList lockable={true} toBottomHeight={10} dataSource={messages} />
       <div className="fantasma" ref={scrollRef}></div>
