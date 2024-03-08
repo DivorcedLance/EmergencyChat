@@ -57,7 +57,7 @@ def delete_user(_id: str):
     return Response(status_code=HTTP_204_NO_CONTENT)
 
 
-@user.get("/sign-in", tags=["Users"])
+@user.post("/sign-in", tags=["Users"])
 async def sign_in(username: str, password: str, device: Device):
     user = db.users.find_one({"username": username})
     if user:
