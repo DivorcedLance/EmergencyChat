@@ -61,10 +61,13 @@ def delete_user(_id: str):
 @user.post("/sign-in", tags=["Users"])
 async def sign_in(username: str, password: str, device: Device):
     user = db.users.find_one({"username": username})
+    div = {}
     if user:
-        await process_device(device, str(user["_id"]))
+        div = await process_device(device, str(user["_id"]))
+        if not div:
+            return HTTPException(status_code=404, detail="Device not created")
         if sha256_crypt.verify(password, user["password"]):
-            return userEntity(user)
+            return userDeviceEntity(user, div)
     return HTTPException(status_code=404, detail="User not found or password incorrect")
 
 
