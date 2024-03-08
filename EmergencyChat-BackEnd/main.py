@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from routes.user import user
 from config.docs import tags_metadata
 from starlette.middleware.cors import CORSMiddleware
+from routes.device import device
 
 app = FastAPI(
     title="EmergencyChat-BackEnd",
@@ -11,6 +12,7 @@ app = FastAPI(
 )
 
 app.include_router(user)
+app.include_router(device)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
