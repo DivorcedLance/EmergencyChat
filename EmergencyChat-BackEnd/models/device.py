@@ -8,4 +8,5 @@ class Device(BaseModel):
     latitude: float
     longitude: float
     device_token: str
+    district_id: Optional[str] = None
     user_id: Optional[str] = None
