@@ -1,7 +1,6 @@
 import './App.css'
+import { DataManager } from './components/DataManager'
 
-import LoginSign from './components/LoginSign'
-import TestComponent from './components/TestComponent'
 
 
 function App() {
@@ -9,7 +8,7 @@ function App() {
 
   return (
     <>
-      <LoginSign />
+      <DataManager />
     </>
   )
 }

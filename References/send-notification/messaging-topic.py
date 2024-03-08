@@ -33,10 +33,10 @@ if __name__ == '__main__':
     image_url = 'https://i.pinimg.com/736x/65/c7/92/65c79220900fd9748639ed6da44565a7.jpg'
 
     tokens = ['c7Qb3KC7wUFgkprovB6zZF:APA91bEUaeLa_aUKZJl6VLcAjmD-OsQBqGjg7F_w1YbUK1mScSpkFHgYhuA17iVRvD2FZUiy_Ed5rVkxQghdhWbo79mSu8DW1Z-_PeAM8PS7ZqjKYoaQ59reI2Z4Wo2RUuWkja7Sww5Z', 'dqhn7HZLFP5YUXA8wLVV6I:APA91bFM5Mv5Pf1RKwQVW-XbXNfIKtEjx392nKpijlycdzlpPCfUUteb_kiWG8NNXbCdFZfk1GVES719i6xnidgnlcRllTUbJ5TYnTchFgwJIXQAVQdkrAkRxYswtqfrh2-mgfeDMi7D',
-    'ctYG5GmBgrUbetBkhHR7JY:APA91bHUXb4InYc8X_WqCxmml1AD8DAQbEmqRdSxlWC0H-pqlan6vsszKGfyqp9Oqbj6fjdqS3leSdyxBXzpNuV82YufwOqkYMmdxy28a-o7GwltX3jj9MS_Klfhsoo1IvyhWOXc3ODT']
+    'ctYG5GmBgrUbetBkhHR7JY:APA91bHUXb4InYc8X_WqCxmml1AD8DAQbEmqRdSxlWC0H-pqlan6vsszKGfyqp9Oqbj6fjdqS3leSdyxBXzpNuV82YufwOqkYMmdxy28a-o7GwltX3jj9MS_Klfhsoo1IvyhWOXc3ODT',
+    'crzUD7HJe9E9h7mAIL65C7:APA91bFB1m3XWn4DS0hL576tufQLQRwXBJ4Pt2xuo3_31Qx3SuMgPVDXx3oskXCvFH3-i-kCpdrEXTAtKtwYJ_jjdSOy-rx2dYBqFxNpB5jkZbZPiwKiX9wkiKsN-SXqlu19KIhzhnkA']
     topic = 'olivos'
 
     subscribe_tokens_to_topic(tokens, topic)
-    send_notification_to_topic(topic, 'Hello All', 'This is a test message', image_url)
-    unsubscribe_tokens_from_topic(['ctYG5GmBgrUbetBkhHR7JY:APA91bHUXb4InYc8X_WqCxmml1AD8DAQbEmqRdSxlWC0H-pqlan6vsszKGfyqp9Oqbj6fjdqS3leSdyxBXzpNuV82YufwOqkYMmdxy28a-o7GwltX3jj9MS_Klfhsoo1IvyhWOXc3ODT'], topic)
-    send_notification_to_topic(topic, 'Hello Rest', 'This is a test message', image_url)
+    send_notification_to_topic(topic, 'Hola', 'webon', image_url)
+    unsubscribe_tokens_from_topic(tokens, topic)

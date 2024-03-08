@@ -44,8 +44,10 @@ export function DataManager() {
     //   body: JSON.stringify({ messagingToken: messagingToken, longitud: location[0], latitud: location[1]})
     // })
 
+    
     console.log({ messagingToken: messagingToken, longitud: location[0], latitud: location[1]})
   }
+
 
   useEffect(() => {
     if (location && messagingToken) {
@@ -55,7 +57,6 @@ export function DataManager() {
 
   return (
     <>
-    
     </>
   )
 }
