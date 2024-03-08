@@ -43,9 +43,25 @@ function Chat({ logoutSesion, sesion }) {
     //Se modifica title con el nombre del usuario logueado
     if (inputReferance.current.value === "") return;
     ws.current.send(JSON.stringify({
-      event: 'message',
+      event: 'connection',
       room: room,
-      client: sesion.usuario.id,
+      session: {
+        client: {
+          client_id: sesion.usuario.id,
+          username: sesion.usuario.username,
+          logueado: true,
+        },
+        device: {
+          device_id: "",
+          deviceToken: sesion.device.deviceToken,
+          district: sesion.device.district.name,
+          district_id: sesion.device.district.id,
+          location: {
+            longitude: sesion.device.location.longitude,
+            latitude: sesion.device.location.latitude,
+          },
+        }
+      },
       message: message,
     }));
 
@@ -70,6 +86,32 @@ function Chat({ logoutSesion, sesion }) {
       ws.current.close();
     }
     ws.current = new WebSocket(`ws://localhost:8000/ws/${room}/${sesion.usuario.id}`);
+    
+    ws.current.onopen = () => {
+      ws.current.send(JSON.stringify({
+        event: 'connection',
+        room: room,
+        session: {
+          client: {
+            client_id: clientID,
+            username: clientID,
+            logueado: false,
+          },
+          device: {
+            device_id: "",
+            deviceToken: "",
+            district: "",
+            district_id: room,
+            location: {
+              longitude: 0.0,
+              latitude: 0.0,
+            },
+          }
+        },
+      }));
+    }
+
+
     ws.current.onmessage = (event) => {
       const data = JSON.parse(event.data);
       console.log(data);

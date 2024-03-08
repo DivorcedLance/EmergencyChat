@@ -18,7 +18,8 @@ export default function ModalIMG() {
       url: "https://images.unsplash.com/photo-1536987333706-fc9adfb10d91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
       caption: "Slide 3",
     },
-]);
+  ]);
+  
   const spanStyle = {
     padding: "20px",
     background: "#efefef",
