@@ -25,6 +25,7 @@ async def process_device(device: Device, user_id: str):
             if device.district == "NOT IN ANY DISTRICT":
                 return None
             device._id = device_r["_id"]
+            device.district_id = device_r["district_id"]
             device.user_id = user_id
             return update_device(device._id, device)
         return await register_device(device, user_id)
@@ -42,11 +43,18 @@ async def register_device(device: Device, user_id: str):
     if device.district == "NOT IN ANY DISTRICT":
         return None
     device.user_id = user_id
+    dist = db.districts.find_one({"nombdist": device.district})
+    if not dist:
+        return None
+    device.district_id = str(dist["_id"])
     device.device_token = sha256_crypt.encrypt(device.device_token)
     try:
+        print(dict(device))
+        print(device.district_id)
         id = db.devices.insert_one(dict(device)).inserted_id
     except:
         return None
+    print(id)
     return db.devices.find_one({"_id": id})
 
 

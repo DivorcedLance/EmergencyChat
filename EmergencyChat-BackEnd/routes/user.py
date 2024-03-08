@@ -7,6 +7,7 @@ from passlib.hash import sha256_crypt
 from bson import ObjectId
 from starlette.status import HTTP_204_NO_CONTENT
 from .device import *
+from schemas.district import *
 
 user = APIRouter()
 
@@ -65,3 +66,8 @@ async def sign_in(username: str, password: str, device: Device):
         if sha256_crypt.verify(password, user["password"]):
             return userEntity(user)
     return HTTPException(status_code=404, detail="User not found or password incorrect")
+
+
+@user.get("/find_all_districts", tags=["Users"])
+def get_districts():
+    return districtsEntity(db.districts.find())

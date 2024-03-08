@@ -9,6 +9,7 @@ def deviceEntity(item) -> dict:
         "longitude": item["longitude"],
         "device_token": item["device_token"],
         "user_id": item["user_id"],
+        "district_id": item["district_id"],
     }
 
 
