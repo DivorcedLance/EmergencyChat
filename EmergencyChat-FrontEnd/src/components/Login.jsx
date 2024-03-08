@@ -1,29 +1,37 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import loginimg from "../assets/loginIMG.svg";
 import "./LoginSign.css";
-import backendAPI from '../utils/backendAPI.js'
+import { useNavigate } from "react-router-dom";
+import backendAPI from "../utils/backendAPI.js";
 
-export default function Login({loggearUsuario}) {
+export default function Login({ sesion, loggearUsuario }) {
+  const navigate = useNavigate();
 
-  const login = () => {
+  const login = async (event) => {
+
+    event.preventDefault();
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-    const usuarios = backendAPI.get("find-all");
-    setTimeout(() => {
-      console.log(usuarios);
+    const response = await backendAPI.get(
+      `sing-in?username=${username}&password=${password}`
+    );
+    console.log(response);
 
-    }, 5000);
-    
-    usuarios.forEach(usuario => {
-      if(usuario.username === username && usuario.password === password){
-        console.log("Usuario encontrado");
-        loggearUsuario({
-          username: username,
-          password: password,
-          logueado: true
-        });
-      }
-    });
+
+    if (response.detail) {
+      alert("Usuario o contraseña incorrectos");
+      document.getElementById("username").value = "";
+      document.getElementById("password").value = "";
+    } else {
+      loggearUsuario({
+        usuario: {
+          id: response._id,
+          username: response.username,
+          logueado: true,
+        }
+      });
+      navigate("/chat/VENTANILLA");
+    }
   };
 
   return (
