@@ -8,7 +8,6 @@ import {
   SystemMessage,
 } from "react-chat-elements";
 import { useParams } from "react-router-dom";
-import example from "./example.jpg";
 import "./Chat.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SendImage from "../ModalImg/SendImage";
@@ -21,29 +20,7 @@ function Chat({ logoutSesion, sesion }) {
   const inputReferance = useRef(null);
   const ws = useRef(null);
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([
-    {
-      position: "left",
-      type: "text",
-      title: "Kursat",
-      text: "Give me a message list example !",
-      date: new Date(),
-    },
-    {
-      position: "right",
-      type: "text",
-      title: "Emre",
-      text: "That's all.",
-      date: new Date(),
-    },
-    {
-      position: "left",
-      type: "photo",
-      title: "Kursat",
-      data: { uri: "https://picsum.photos/200/200", with: 200, height: 200 },
-      date: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState([]);
 
   const addMessage = () => {
     //Se modifica title con el nombre del usuario logueado
@@ -58,15 +35,11 @@ function Chat({ logoutSesion, sesion }) {
     );
 
     inputReferance.current.value = "";
-    /* setMessages([...messages, newMessage]);
-    
-    scrollRef.current.scrollIntoView({ behavior: "smooth" }); */
   };
 
   const buttonSend = () => {
     return (
       <>
-        {/* <SendImage />*/}
         <Button text={"Send"} onClick={addMessage} title="Send" />
       </>
     );
@@ -109,11 +82,6 @@ function Chat({ logoutSesion, sesion }) {
           text: `${data.username} se ha unido a la sala ${sesion.device.district.name}`,
         };
         setMessages((prevMessages) => [...prevMessages, newMessage]);
-        /* document.getElementsByClassName("rce-mlist").appendChild(
-          <SystemMessage
-            text={data.message}
-          />
-        ); */
       } else if (data.event === "disconnection") {
         const newMessage = {
           type: "system",
@@ -122,24 +90,12 @@ function Chat({ logoutSesion, sesion }) {
         setMessages((prevMessages) => [...prevMessages, newMessage]);
       }
 
-      //VIENEN LOS IF
-      /* const newMessage = {
-        position: "right",
-        type: "text",
-        title: "Emre",
-        text: event.data,
-        date: new Date(),
-      };
-      setMessages((prevMessages) => [...prevMessages, newMessage]); */
     };
     return () => {
       ws.current.close();
     };
   }, [room, sesion.usuario.id]);
 
-  const buttonSendImage = () => {
-    return <SendImage />;
-  };
   const buttonLogOut = () => {
     return (
       <Button

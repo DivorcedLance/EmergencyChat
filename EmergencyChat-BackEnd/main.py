@@ -1,10 +1,12 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from routes.user import user
+from routes.user import user, getTokensFromDistric
 from config.docs import tags_metadata
 from starlette.middleware.cors import CORSMiddleware
 from routes.device import device
 
-import json
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import messaging
 
 app = FastAPI(
     title="EmergencyChat-BackEnd",
@@ -56,7 +58,6 @@ class ConnectionManager:
         }, room)
 
     async def messageActions(self, data: dict, room: str):
-        print("messageActions", data)
         await self.broadcast({
             "event": "message",
             "username": data["sesion"]["usuario"]["username"],
@@ -64,7 +65,7 @@ class ConnectionManager:
             "message": data["message"],
             "room": room
         }, room)
-        print("messageActionsF")
+        
 
     async def send_personal_message(self, data: dict, websocket: WebSocket):
         await websocket.send_json(data)

@@ -74,3 +74,15 @@ async def sign_in(username: str, password: str, device: Device):
 @user.get("/find_all_districts", tags=["Users"])
 def get_districts():
     return districtsEntity(db.districts.find())
+
+
+
+def getTokensFromDistric(distric_id):
+    data = db.devices.find({"district_id": distric_id})
+    tokens = []
+    for d in data:
+        tokens.append(sha256_crypt.decrypt(d["device_token"]))
+    return tokens
+
+    
+

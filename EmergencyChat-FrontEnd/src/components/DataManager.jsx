@@ -9,8 +9,7 @@ export function DataManager({ updateDevice }) {
   const [messagingToken, setMessagingToken] = useState("");
 
   useEffect(() => {
-    setLocation([-76.9327104, -12.1831424]);
-    /* if (navigator.geolocation) {
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         function (position) {
           setLocation([position.coords.longitude, position.coords.latitude]);
@@ -22,7 +21,7 @@ export function DataManager({ updateDevice }) {
       );
     } else {
       alert("Your browser does not support geolocation");
-    } */
+    }
   }, []);
 
   useEffect(() => {
