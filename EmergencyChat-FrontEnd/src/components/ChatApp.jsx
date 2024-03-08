@@ -13,6 +13,7 @@ function ChatApp() {
     }
     ws.current = new WebSocket(`ws://localhost:8000/ws/${room}/${clientID}`);
     ws.current.onmessage = (event) => {
+      console.log(event);
       setMessages((prevMessages) => [...prevMessages, event.data]);
     };
     return () => {

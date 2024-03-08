@@ -12,13 +12,10 @@ function Chat({ logoutSesion, sesion }) {
   const { room } = useParams();
 
   const scrollRef = useRef();
-
   const inputReferance = useRef(null);
+  const ws = useRef(null);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([
-    //INFORMACION OBTENIDA DEL BACKEND
-    //POSITION SE DECIDE SEGUN EL USUARIO
-    //SI ES EL USUARIO LOGUEADO, right, otro caso left
     {
       position: "left",
       type: "text",
@@ -53,9 +50,11 @@ function Chat({ logoutSesion, sesion }) {
       date: new Date(),
     };
     setMessage("");
-    setMessages([...messages, newMessage]);
+    ws.current.send(message);
     inputReferance.current.value = "";
-    scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    /* setMessages([...messages, newMessage]);
+    
+    scrollRef.current.scrollIntoView({ behavior: "smooth" }); */
   };
 
   const buttonSend = () => {
@@ -66,6 +65,30 @@ function Chat({ logoutSesion, sesion }) {
       </>
     );
   };
+
+
+  useEffect(() => {
+    if (ws.current) {
+      ws.current.close();
+    }
+    ws.current = new WebSocket(`ws://localhost:8000/ws/${room}/${sesion.usuario.id}`);
+    ws.current.onmessage = (event) => {
+      console.log(event);
+      //VIENEN LOS IF
+      const newMessage = {
+        position: "right",
+        type: "text",
+        title: "Emre",
+        text: event.data,
+        date: new Date(),
+      };
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    };
+    return () => {
+      ws.current.close();
+    };
+  }, [room, sesion.usuario.id]);
+
 
   const buttonSendImage = () => {
     return <SendImage />;
