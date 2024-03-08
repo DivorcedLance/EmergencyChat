@@ -1,8 +1,31 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import loginimg from "../assets/loginIMG.svg";
 import "./LoginSign.css";
+import backendAPI from '../utils/backendAPI.js'
 
-export default function Login() {
+export default function Login({loggearUsuario}) {
+
+  const login = () => {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const usuarios = backendAPI.get("find-all");
+    setTimeout(() => {
+      console.log(usuarios);
+
+    }, 5000);
+    
+    usuarios.forEach(usuario => {
+      if(usuario.username === username && usuario.password === password){
+        console.log("Usuario encontrado");
+        loggearUsuario({
+          username: username,
+          password: password,
+          logueado: true
+        });
+      }
+    });
+  };
+
   return (
     <div className="login template d-flex justify-content-center align-items-center vh-100 bg-white">
       <div className="w-50 p-5 mx-5 rounded bg-white shadow-lg">
@@ -31,7 +54,7 @@ export default function Login() {
             />
           </div>
           <div className="d-grid mt-3 py-2">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary" onClick={login}>
               Iniciar Sesión
             </button>
           </div>
@@ -42,7 +65,7 @@ export default function Login() {
           </div>
         </form>
       </div>
-      <div className="w-50">
+      <div className="w-50 logo">
         <img src={loginimg} className="img-fluid" alt="..."></img>
       </div>
     </div>

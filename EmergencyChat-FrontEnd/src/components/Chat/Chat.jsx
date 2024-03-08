@@ -1,14 +1,15 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "react-chat-elements/dist/main.css";
-import { MessageList } from "react-chat-elements";
-import { Input } from "react-chat-elements";
-import { Button } from "react-chat-elements";
-
+import { MessageList, Button, Input, Navbar } from "react-chat-elements";
+import example from "./example.jpg";
+import "./Chat.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 function Chat() {
+  //EL ROOM LLEGA POR PROPS DEL INICIO
+  let room = "VENTANILLA";
+  const scrollRef = useRef();
   const inputReferance = useRef(null);
-
   const [message, setMessage] = useState("");
-
   const [messages, setMessages] = useState([
     //INFORMACION OBTENIDA DEL BACKEND
     //POSITION SE DECIDE SEGUN EL USUARIO
@@ -27,10 +28,18 @@ function Chat() {
       text: "That's all.",
       date: new Date(),
     },
+    {
+      position: "left",
+      type: "photo",
+      title: "Kursat",
+      data: { uri: "https://picsum.photos/200/200", with: 200, height: 200 },
+      date: new Date(),
+    },
   ]);
 
   const addMessage = () => {
     //Se modifica title con el nombre del usuario logueado
+    if (inputReferance.current.value === "") return;
     const newMessage = {
       position: "right",
       type: "text",
@@ -41,31 +50,44 @@ function Chat() {
     setMessage("");
     setMessages([...messages, newMessage]);
     inputReferance.current.value = "";
+    scrollRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const buttonSend = () => {
     return <Button text={"Send"} onClick={addMessage} title="Send" />;
   };
 
+  const scrollToBottom = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
+
   return (
-    <>
-      <MessageList
-        className="message-list"
-        lockable={true}
-        toBottomHeight={"100%"}
-        dataSource={messages}
-      />
-      <Input
-        referance={inputReferance}
-        placeholder="Type here..."
-        multiline={true}
-        value={message}
-        onChange={(e) => {
-          setMessage(e.target.value);
-        }}
-        rightButtons={buttonSend()}
-      />
-    </>
+      <div className="Chat-contaniner">
+        <Navbar center={<div>{room}</div>} />
+        <MessageList
+          lockable={true}
+          toBottomHeight={10}
+          dataSource={messages}
+        />
+        <div className="fantasma" ref={scrollRef}></div>
+        <Input
+          referance={inputReferance}
+          placeholder="Type here..."
+          multiline={true}
+          value={message}
+          onChange={(e) => {
+            setMessage(e.target.value);
+          }}
+          rightButtons={buttonSend()}
+        />
+      </div>
+
   );
 }
 
