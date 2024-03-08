@@ -13,6 +13,7 @@ export function DataManager({ updateDevice }) {
       navigator.geolocation.getCurrentPosition(
         function (position) {
           setLocation([position.coords.longitude, position.coords.latitude]);
+          // setLocation([-76.9327104, -12.1831424]);
         },
         function (error) {
           console.log(error);
