@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import SignUp from "./Signup";
 import Login from "./Login";
-import Solubi from "./SolUbi/solubi";
+import Solubi from "./SolUbi/Solubi";
 import Chat from "./Chat/Chat";
 import backendAPI from "../utils/backendAPI";
 import { DataManager } from "./DataManager";
