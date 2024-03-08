@@ -1,8 +1,16 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import signimg from "../assets/singupIMG.svg";
 import "./LoginSign.css";
+import backendAPI from '../utils/backendAPI.js'
 
 export default function Signup() {
+
+  const register = () => {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    backendAPI.post("sing-up", { username, password });
+  };
+
   return (
     <div className="login template d-flex justify-content-center align-items-center vh-100">
       <div className="w-50 p-5 mx-5 rounded bg-white shadow-lg">
@@ -31,7 +39,7 @@ export default function Signup() {
             />
           </div>
           <div className="d-grid mt-3 py-2">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary" onClick={register}>
               Registrarse
             </button>
           </div>
@@ -42,7 +50,7 @@ export default function Signup() {
           </div>
         </form>
       </div>
-      <div className="w-50 px-5">
+      <div className="w-50 px-5 logo">
         <img src={signimg} className="img-fluid" alt="..."></img>
       </div>
     </div>
