@@ -1,13 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 import "react-chat-elements/dist/main.css";
 import { MessageList, Button, Input, Navbar } from "react-chat-elements";
+import { useParams } from "react-router-dom";
 import example from "./example.jpg";
 import "./Chat.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-function Chat() {
+
+function Chat({ logOutSesion, sesion }) {
   //EL ROOM LLEGA POR PROPS DEL INICIO
-  let room = "VENTANILLA";
+  const { room } = useParams();
+
   const scrollRef = useRef();
+
   const inputReferance = useRef(null);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([
@@ -57,37 +61,39 @@ function Chat() {
     return <Button text={"Send"} onClick={addMessage} title="Send" />;
   };
 
-  const scrollToBottom = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: "smooth" });
-    }
+  const buttonLogOut = () => {
+    return (
+      <Button
+        text={"Log Out"}
+        onClick={() => {
+          logOutSesion();
+          window.location.href = "/";
+        }}
+        title="Log Out"
+      />
+    );
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, []);
-
   return (
-      <div className="Chat-contaniner">
-        <Navbar center={<div>{room}</div>} />
-        <MessageList
-          lockable={true}
-          toBottomHeight={10}
-          dataSource={messages}
-        />
-        <div className="fantasma" ref={scrollRef}></div>
-        <Input
-          referance={inputReferance}
-          placeholder="Type here..."
-          multiline={true}
-          value={message}
-          onChange={(e) => {
-            setMessage(e.target.value);
-          }}
-          rightButtons={buttonSend()}
-        />
-      </div>
-
+    <div className="Chat-contaniner">
+      <Navbar
+        left={<div>{usuario.username}</div>}
+        center={<div>{room}</div>}
+        right={buttonLogOut()}
+      />
+      <MessageList lockable={true} toBottomHeight={10} dataSource={messages} />
+      <div className="fantasma" ref={scrollRef}></div>
+      <Input
+        referance={inputReferance}
+        placeholder="Type here..."
+        multiline={true}
+        value={message}
+        onChange={(e) => {
+          setMessage(e.target.value);
+        }}
+        rightButtons={buttonSend()}
+      />
+    </div>
   );
 }
 
