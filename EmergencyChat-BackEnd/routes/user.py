@@ -1,10 +1,12 @@
 from fastapi import APIRouter, Response, status, HTTPException
 from config.db import db
-from schemas.user import userEntity, usersEntity
-from models.user import User
+from schemas.user import *
+from models.user import *
+from models.device import Device
 from passlib.hash import sha256_crypt
 from bson import ObjectId
 from starlette.status import HTTP_204_NO_CONTENT
+from .device import *
 
 user = APIRouter()
 
@@ -14,19 +16,24 @@ def find_all_users():
     return usersEntity(db.users.find())
 
 
-@user.post("/sing-up", response_model=User, tags=["Users"])
-def create_user(user: User):
+@user.post("/sign-up", tags=["Users"])
+async def create_user(data: UserDeviceData):
+    user = data.user
     new_user = dict(user)
     new_user["password"] = sha256_crypt.encrypt(new_user["password"])
+    dev = {}
     try:
         id = db.users.insert_one(new_user).inserted_id
+        dev = await process_device(data.device, str(id))
+        if not dev:
+            return HTTPException(status_code=404, detail="Device not created")
     except:
-        return {"message": "Error: User not created"}
+        return HTTPException(status_code=404, detail="User not created")
     try:
         user_r = db.users.find_one({"_id": id})
     except:
-        return {"message": "Error: User not found"}
-    return userEntity(user_r)
+        return HTTPException(status_code=404, detail="User not created")
+    return userDeviceEntity(user_r, dev)
 
 
 @user.get("/find-user/{id}", response_model=User, tags=["Users"])
@@ -45,14 +52,16 @@ def update_user(id: str, user: User):
     "/delete-user/{id}", status_code=status.HTTP_204_NO_CONTENT, tags=["Users"]
 )
 def delete_user(_id: str):
-    userEntity(db.users.find_one_and_delete({"_id": ObjectId(_id)}))
+    db.users.find_one_and_delete({"_id": ObjectId(_id)})
+    delete_devices(_id)
     return Response(status_code=HTTP_204_NO_CONTENT)
 
 
-@user.get("/sing-in", tags=["Users"])
-def sing_in(username: str, password: str):
+@user.get("/sign-in", tags=["Users"])
+async def sign_in(username: str, password: str, device: Device):
     user = db.users.find_one({"username": username})
     if user:
+        await process_device(device, str(user["_id"]))
         if sha256_crypt.verify(password, user["password"]):
             return userEntity(user)
     return HTTPException(status_code=404, detail="User not found or password incorrect")
