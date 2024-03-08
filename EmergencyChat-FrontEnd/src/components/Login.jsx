@@ -51,7 +51,7 @@ export default function Login({loggearUsuario}) {
             />
           </div>
           <div className="d-grid mt-3 py-2">
-            <button type="submit" className="btn btn-primary" onClick={login}>
+            <button type="button" className="btn btn-primary" onClick={login}>
               Iniciar Sesión
             </button>
           </div>
